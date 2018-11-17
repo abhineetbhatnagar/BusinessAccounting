@@ -81,7 +81,7 @@ namespace AccountingPlanner.Controllers.Generic
                         new Claim("id_organization", _dtResp.Rows[0]["id_organization_master"].ToString()),
                         new Claim("organization_name", _dtResp.Rows[0]["organization_name"].ToString()),
                         new Claim("profile_img", _dtResp.Rows[0]["profile_img"].ToString()),
-                        new Claim("pid", _dtResp.Rows[0]["pid"].ToString())
+                        new Claim("pid", _dtResp.Rows[0]["pid"].ToString()),
                     };
 
                     var userIdentity = new ClaimsIdentity(claims, "Cookie");
