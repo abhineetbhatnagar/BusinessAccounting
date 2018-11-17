@@ -1,0 +1,201 @@
+﻿@model AccountingPlanner.Models.Profile.ProfileModel
+@using System.Data
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--------------------
+         END - Top Bar
+         -------------------->
+<!--------------------
+START - Breadcrumbs
+-------------------->
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html">Profile &amp; Settings</a>
+    </li>
+    <li class="breadcrumb-item">
+        <span>Update Profile</span>
+    </li>
+</ul>
+<!--------------------
+END - Breadcrumbs
+-------------------->
+@{
+    var x = User.Identity as ClaimsIdentity;
+}
+<div class="content-i" style="height: 100%;">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="user-profile compact">
+                    <div class="up-head-w" style="background-image:url(@x.FindFirst("profile_img").Value)">
+                        <div class="up-main-info">
+                            <h2 class="up-header">
+                                @x.FindFirst("name").Value
+                            </h2>
+                            <h6 class="up-sub-header">
+                                @x.FindFirst("organization_name").Value
+                            </h6>
+                        </div>
+                        <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF"><path class="decor-path" d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z"></path></g></svg>
+                    </div>
+                    <form asp-action="UpdatePicture" enctype="multipart/form-data">
+                        <fieldset class="padded-v">
+                            <legend style="margin-bottom: 0px;"><span>Update Profile Picture</span></legend>
+                            @if (!string.IsNullOrEmpty(Convert.ToString(TempData["ImageUploadError"])))
+                            {
+                                <div class="alert alert-danger"><strong>Oops!</strong> @TempData["ImageUploadError"]</div>
+                            }
+                            @if (!string.IsNullOrEmpty(Convert.ToString(TempData["SuccessMessage"])))
+                            {
+                                <div class="alert alert-success"><strong>Updated!</strong> @TempData["SuccessMessage"]</div>
+                            }
+                            <div class="form-group">
+                                <label>Choose Image</label>
+                                <div class="input-group mb-3">
+                                    <input type="file" name="image" class="form-control" placeholder="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="element-wrapper">
+                    <div class="element-box">
+                        
+                        <form id="formValidate" asp-action="Index">
+                            <div class="element-info">
+                                <div class="element-info-with-icon">
+                                    <div class="element-info-icon">
+                                        <div class="os-icon os-icon-wallet-loaded"></div>
+                                    </div>
+                                    <div class="element-info-text">
+                                        <h5 class="element-inner-header">
+                                            Personal Information
+                                        </h5>
+                                        <div class="element-inner-desc">
+                                            Validation of the form is made possible using powerful validator plugin for bootstrap.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["ErrorMessage"])))
+                            {
+                                <div class="alert alert-danger"><strong>Oops!</strong> @ViewData["ErrorMessage"]</div>
+                            }
+                            @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["SuccessMessage"])))
+                            {
+                                <div class="alert alert-success"><strong>Updated!</strong> @ViewData["SuccessMessage"]</div>
+                            }
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="name" class="control-label"></label>
+                                        <input asp-for="name" class="form-control" placeholder="Enter your full name" />
+                                        <span asp-validation-for="name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="email" class="control-label"></label>
+                                        <input asp-for="email" class="form-control" placeholder="Enter your eMail" readonly />
+                                        <span asp-validation-for="email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="dob" class="control-label"></label>
+                                        <div class="date-input">
+                                            <input asp-for="dob" class="single-daterange form-control" placeholder="Date of birth" type="text">
+                                        </div>
+                                        <span asp-validation-for="dob" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="phone" class="control-label"></label>
+                                        <input asp-for="phone" class="form-control" placeholder="Enter your phone number" />
+                                        <span asp-validation-for="phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="country" class="control-label"></label>
+                                        <select asp-for="country" class="form-control">
+                                            <option value="">-- Choose One --</option>
+                                            @{
+                                                DataTable dt = null;
+                                                if (ViewData["CountryList"] != null)
+                                                {
+                                                    dt = (DataTable)ViewData["CountryList"];
+
+                                                    for (int i = 0; i < dt.Rows.Count; i++)
+                                                    {
+                                                        <option value="@dt.Rows[i]["id_country"]">@dt.Rows[i]["country_name"]</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                        <span asp-validation-for="country" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="province" class="control-label"></label>
+                                        <input asp-for="province" class="form-control" placeholder="Enter your province" />
+                                        <span asp-validation-for="province" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="city" class="control-label"></label>
+                                        <input asp-for="city" class="form-control" placeholder="Enter your city" />
+                                        <span asp-validation-for="city" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="pin" class="control-label"></label>
+                                        <input asp-for="pin" class="form-control" placeholder="Enter your postal code" />
+                                        <span asp-validation-for="pin" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-buttons-w">
+                                <button class="btn btn-primary" type="submit"> Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('input.single-daterange').daterangepicker({ "singleDatePicker": true });
+    </script>
+}

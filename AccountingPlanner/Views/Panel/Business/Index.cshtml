@@ -1,0 +1,97 @@
+﻿@using System.Data;
+@{
+    ViewData["Title"] = "Business";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html">Business</a>
+    </li>
+    <li class="breadcrumb-item">
+        <span>List</span>
+    </li>
+</ul>
+<!--------------------
+END - Breadcrumbs
+-------------------->
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">
+                Business Section
+            </h6>
+            <div class="element-box">
+                <h5 class="form-header">
+                    Business List <a asp-controller="Business" asp-action="Create" class="btn brn-sm btn-primary float-right"><i class="fa fa-plus"></i> &nbsp; Register New Business</a>
+                </h5>
+                <div class="form-desc">
+                    DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews. <a href="http://www.dropzonejs.com/" target="_blank">Learn More here</a>
+                </div>
+                @if (!string.IsNullOrEmpty(Convert.ToString(TempData["SuccessMessage"])))
+                {
+                    <div class="alert alert-success"><strong>Done!</strong> @TempData["SuccessMessage"]</div>
+                }
+                @{
+                    DataTable _dt;
+                    if (ViewData["BusinessList"] != null)
+                    {
+                        _dt = (DataTable)ViewData["BusinessList"];
+                        if (_dt.Rows.Count == 0)
+                        {
+                            <div class="text-center">
+                                <h5>No Business Registered</h5>
+                                <small style="border-bottom: 0px;" class="form-desc">
+                                    You have not registered any business yet. Click below to register your first business.
+                                    <br /><br />
+                                    <a asp-controller="Business" asp-action="Create" class="btn btn-outline-success text-center">Register Now</a>
+                                </small>
+                            </div>
+                        }
+                        else
+                        {
+                            <table id="dataTable1" width="100%" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Organization Name</th>
+                                        <th>Organization Type</th>
+                                        <th>Business Type</th>
+                                        <th>Phone</th>
+                                        <th>Currency</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < _dt.Rows.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@(i + 1)</td>
+                                            <td>@_dt.Rows[i]["name"]</td>
+                                            <td>@_dt.Rows[i]["type_of_organization"]</td>
+                                            <td>@_dt.Rows[i]["type_of_business"]</td>
+                                            <td>@_dt.Rows[i]["mobile"]</td>
+                                            <td>@_dt.Rows[i]["currency_label"]</td>
+                                            <td>@_dt.Rows[i]["country_name"]</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="text-center">
+                            <h5>@ViewData["ErrorMessage"]</h5>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

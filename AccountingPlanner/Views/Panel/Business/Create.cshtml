@@ -1,0 +1,254 @@
+﻿@model AccountingPlanner.Models.Business.BusinessModel
+@using System.Data;
+@{
+    ViewData["Title"] = "Add Business";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html">Business</a>
+    </li>
+    <li class="breadcrumb-item">
+        <span>List</span>
+    </li>
+</ul>
+<!--------------------
+END - Breadcrumbs
+-------------------->
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">
+                Business Section
+            </h6>
+            <div class="element-box">
+                <h5 class="form-header">
+                    Add New Business
+                </h5>
+                <div class="form-desc">
+                    DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews. <a href="http://www.dropzonejs.com/" target="_blank">Learn More here</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["ErrorMessage"])))
+                        {
+                            <div class="alert alert-danger"><strong>Oops!</strong> @ViewData["ErrorMessage"]</div>
+                        }
+                        <form asp-action="Create" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <fieldset>
+                                <legend>
+                                    <span>General Details</span>
+                                </legend>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label asp-for="name" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="name" class="text-danger"></span>
+                                            <input asp-for="name" class="form-control" placeholder="Enter Organization Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="type_of_business" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="type_of_business" class="text-danger"></span>
+                                            <select asp-for="type_of_business" class="form-control">
+                                                <option value="">-- Choose One --</option>
+                                                <option value="Artists, Photographers & Creative Types">Artists, Photographers & Creative Types</option>
+                                                <option value="Consultants & Professionals">Consultants & Professionals</option>
+                                                <option value="Financial Services">Financial Services</option>
+                                                <option value="General: I make or sell a PRODUCT">General: I make or sell a PRODUCT</option>
+                                                <option value="General: I provide a SERVICE">General: I provide a SERVICE</option>
+                                                <option value="Hair, Spa & Aesthetics">Hair, Spa & Aesthetics</option>
+                                                <option value="Medical, Dental, Health">Medical, Dental, Health</option>
+                                                <option value="Non-profits, Associations & Groups">Non-profits, Associations & Groups</option>
+                                                <option value="Real Estate, Construction & Home Improvement">Real Estate, Construction & Home Improvement</option>
+                                                <option value="Retailers, Resellers & Sales">Retailers, Resellers & Sales</option>
+                                                <option value="Web, Tech & Media">Web, Tech & Media</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="type_of_organization" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="type_of_organization" class="text-danger"></span>
+                                            <select asp-for="type_of_organization" class="form-control">
+                                                <option value="">-- Choose One --</option>
+                                                <option value="Sole Proprietorship">Sole Proprietorship</option>
+                                                <option value="Partnership">Partnership</option>
+                                                <option value="Corporation">Corporation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="logo"></label> &nbsp;
+                                            <span asp-validation-for="logo" class="text-danger"></span>
+                                            <input type="file" asp-for="logo" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="currency" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="currency" class="text-danger"></span>
+                                            <select asp-for="currency" class="form-control">
+                                                <option value="">-- Choose One --</option>
+                                                @{
+                                                    DataTable dt2;
+                                                    if (ViewData["CountryList"] != null)
+                                                    {
+                                                        dt2 = (DataTable)ViewData["CountryList"];
+
+                                                        for (int i = 0; i < dt2.Rows.Count; i++)
+                                                        {
+                                                            <option value="@dt2.Rows[i]["id_country"]">@dt2.Rows[i]["currency"]</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>
+                                    <span>Communication Details</span>
+                                </legend>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="phone" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="phone" class="text-danger"></span>
+                                            <input placeholder="Enter Phone" asp-for="phone" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="fax" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="fax" class="text-danger"></span>
+                                            <input placeholder="Enter Fax" asp-for="fax" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="mobile" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="mobile" class="text-danger"></span>
+                                            <input placeholder="Enter Mobile" asp-for="mobile" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="toll_free" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="toll_free" class="text-danger"></span>
+                                            <input placeholder="Enter Toll Free Number" asp-for="toll_free" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="website" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="website" class="text-danger"></span>
+                                            <input placeholder="Enter Website URL" asp-for="website" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>
+                                    <span>Address Details</span>
+                                </legend>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label asp-for="address_line_1" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="address_line_1" class="text-danger"></span>
+                                            <input placeholder="Enter Address Line 1" asp-for="address_line_1" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label asp-for="address_line_2" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="address_line_2" class="text-danger"></span>
+                                            <input placeholder="Enter Address Line 2" asp-for="address_line_2" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="city" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="city" class="text-danger"></span>
+                                            <input placeholder="Enter City" asp-for="city" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="state" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="state" class="text-danger"></span>
+                                            <input placeholder="Enter State" asp-for="state" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="country" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="country" class="text-danger"></span>
+                                            <select asp-for="country" class="form-control">
+                                                <option value="">-- Choose One --</option>
+                                                @{
+                                                    DataTable dt = null;
+                                                    if (ViewData["CountryList"] != null)
+                                                    {
+                                                        dt = (DataTable)ViewData["CountryList"];
+
+                                                        for (int i = 0; i < dt.Rows.Count; i++)
+                                                        {
+                                                            <option value="@dt.Rows[i]["id_country"]">@dt.Rows[i]["country_name"]</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="pin" class="control-label"></label> &nbsp;
+                                            <span asp-validation-for="pin" class="text-danger"></span>
+                                            <input placeholder="Enter Pin" asp-for="pin" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

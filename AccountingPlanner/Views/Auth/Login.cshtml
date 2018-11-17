@@ -1,0 +1,43 @@
+﻿@model AccountingPlanner.Models.Auth.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="logo-w">
+    <a href="/"><img alt="" src="~/img/logo-big.png"></a>
+</div>
+
+<h4 class="auth-header">
+    Login Form
+</h4>
+
+<form asp-action="Login" style="padding-bottom: 100px;">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["ErrorMessage"])))
+    {
+        <div class="alert alert-danger"><strong>Oops!</strong> @ViewData["ErrorMessage"]</div>
+    }
+    <div class="form-group">
+        <label asp-for="username" class="control-label"></label> &nbsp;
+        <span asp-validation-for="username" class="text-danger"></span>
+        <input asp-for="username" class="form-control" placeholder="Enter username for your account" />
+        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+    </div>
+    <div class="form-group">
+        <label asp-for="password" class="control-label"></label> &nbsp;
+        <span asp-validation-for="password" class="text-danger"></span>
+        <input asp-for="password" type="password" class="form-control" placeholder="Enter password for your account" />
+        <div class="pre-icon os-icon os-icon-fingerprint"></div>
+    </div>
+    <input asp-for="ReturnUrl" value="@ViewData["ReturnUrl"]" type="hidden" class="form-control" />
+    <hr />
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary float-right">Login &nbsp;<i class="fa fa-arrow-right"></i></button>
+        <a asp-controller="Auth" asp-action="Register" class="btn btn-outline-primary float-left">Register</a>
+    </div>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

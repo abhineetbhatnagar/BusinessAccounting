@@ -1,0 +1,169 @@
+﻿@model AccountingPlanner.Models.ProductService.ProductModel
+@using System.Data;
+@{
+    ViewData["Title"] = "Products & Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html">Products &amp; Services</a>
+    </li>
+    <li class="breadcrumb-item">
+        <span>Management</span>
+    </li>
+</ul>
+<!--------------------
+END - Breadcrumbs
+-------------------->
+
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">
+                Product &amp; Service Management
+            </h6>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="element-box">
+                        <h5 class="form-header">
+                            Product &amp; Service List
+                        </h5>
+                        <div class="form-desc">
+                            DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews. <a href="http://www.dropzonejs.com/" target="_blank">Learn More here</a>
+                        </div>
+                        @{
+                            DataTable _dt;
+                            if (ViewData["ProductList"] != null)
+                            {
+                                _dt = (DataTable)ViewData["ProductList"];
+                                if (_dt.Rows.Count == 0)
+                                {
+                                    <div class="text-center">
+                                        <h5>No Product Registered</h5>
+                                        <small style="border-bottom: 0px;" class="form-desc">
+                                            You have not registered any product yet. Fill the form displayed to register a new product.
+                                        </small>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <table id="dataTable1" width="100%" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S. No.</th>
+                                                <th>Title</th>
+                                                <th>Type</th>
+                                                <th>Price</th>
+                                                <th>Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0; i < _dt.Rows.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td>@(i + 1)</td>
+                                                    <td>@_dt.Rows[i]["title"]</td>
+                                                    <td>@_dt.Rows[i]["type"]</td>
+                                                    <td>@_dt.Rows[i]["price"]</td>
+                                                    <td>
+                                                        @if (_dt.Rows[i]["is_sold"].ToString() == "true")
+                                                        {
+                                                            <span class="badge badge-success">Sell</span>
+                                                        }
+                                                        @if (_dt.Rows[i]["is_purchased"].ToString() == "true")
+                                                        {
+                                                            <span class="badge badge-warning">Purchase</span>
+                                                        }
+                                                    </td>
+   
+                                                   </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    <h5>@ViewData["ListErrorMessage"]</h5>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="element-box">
+                        <h5 class="form-header">
+                            Register Product
+                        </h5>
+                        <div class="form-desc">
+                            DropzoneJS is an open source library that provides.
+                        </div>
+                        @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["ErrorMessage"])))
+                        {
+                            <div class="alert alert-danger"><strong>Oops!</strong> @ViewData["ErrorMessage"]</div>
+                        }
+                        @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["SuccessMessage"])))
+                        {
+                            <div class="alert alert-success"><strong>Registered!</strong> @ViewData["SuccessMessage"]</div>
+                        }
+
+                        <form asp-action="Index">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="type" class="control-label"></label>
+                                <select asp-for="type" class="form-control">
+                                    <option value="">-- Choose One --</option>
+                                    <option value="Product">Product</option>
+                                    <option value="Service">Service</option>
+                                </select>
+                                <span asp-validation-for="type" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="title" class="control-label"></label>
+                                <input asp-for="title" placeholder="Enter product title" class="form-control" />
+                                <span asp-validation-for="title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="description" class="control-label"></label>
+                                <textarea asp-for="description" class="form-control" placeholder="Enter product description"></textarea>
+                                <span asp-validation-for="description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="price" class="control-label"></label>
+                                <input type="number" asp-for="price" placeholder="Enter product price" class="form-control" />
+                                <span asp-validation-for="price" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <input type="checkbox" value="true" asp-for="is_sold" class="form-control" /> &nbsp;
+                                        <label asp-for="is_sold" class="control-label"></label>
+                                        <span asp-validation-for="is_sold" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <input type="checkbox" value="true" asp-for="is_purchased" class="form-control" /> &nbsp;
+                                        <label asp-for="is_purchased" class="control-label"></label>
+                                        <span asp-validation-for="is_purchased" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Register Product</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
