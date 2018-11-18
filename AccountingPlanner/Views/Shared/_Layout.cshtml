@@ -87,8 +87,8 @@
                     </div>
                 </div>
                 <!--------------------
-                START - Mobile Menu List
-                -------------------->
+    START - Mobile Menu List
+    -------------------->
                 <ul class="main-menu">
                     <li>
                         <a asp-controller="Home" asp-action="Index">
@@ -109,14 +109,19 @@
                             <span>Personal Information</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-action="Index" asp-controller="Business">
-                            <div class="icon-w">
-                                <div class="os-icon os-icon-layers"></div>
-                            </div>
-                            <span>Businesses</span>
-                        </a>
-                    </li>
+                    @{
+                        if (x.FindFirst("pid").Value.ToString() == "0")
+                        {
+                            <li>
+                                <a asp-action="Index" asp-controller="Business">
+                                    <div class="icon-w">
+                                        <div class="os-icon os-icon-layers"></div>
+                                    </div>
+                                    <span>Businesses</span>
+                                </a>
+                            </li>
+                        }
+                    }
                     <li>
                         <a asp-action="Index" asp-controller="Tax">
                             <div class="icon-w">
@@ -149,19 +154,23 @@
                             <span>Customers</span>
                         </a>
                     </li>
-                    <li class="sub-header">
-                        <span>Collaborations</span>
-                    </li>
-                    <li>
-                        <a href="/Home/Index">
-                            <div class="icon-w">
-                                <div class="os-icon os-icon-ui-92"></div>
-                            </div>
-                            <span>Sub Users</span>
-                        </a>
-                    </li>
+                    @{
+                        if (x.FindFirst("pid").Value.ToString() == "0")
+                        {
+                            <li class="sub-header">
+                                <span>Collaborations</span>
+                            </li>
+                            <li>
+                                <a href="/Home/Index">
+                                    <div class="icon-w">
+                                        <div class="os-icon os-icon-ui-92"></div>
+                                    </div>
+                                    <span>Sub Users</span>
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
-
             </div>
         </div>
         <!--------------------
@@ -254,14 +263,19 @@
                         <span>Personal Information</span>
                     </a>
                 </li>
-                <li>
-                    <a asp-action="Index" asp-controller="Business">
-                        <div class="icon-w">
-                            <div class="os-icon os-icon-layers"></div>
-                        </div>
-                        <span>Businesses</span>
-                    </a>
-                </li>
+                @{
+                    if (x.FindFirst("pid").Value.ToString() == "0")
+                    {
+                        <li>
+                            <a asp-action="Index" asp-controller="Business">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-layers"></div>
+                                </div>
+                                <span>Businesses</span>
+                            </a>
+                        </li>
+                    }
+                }
                 <li>
                     <a asp-action="Index" asp-controller="Tax">
                         <div class="icon-w">
@@ -294,17 +308,22 @@
                         <span>Customers</span>
                     </a>
                 </li>
-                <li class="sub-header">
-                    <span>Collaborations</span>
-                </li>
-                <li>
-                    <a href="/Home/Index">
-                        <div class="icon-w">
-                            <div class="os-icon os-icon-ui-92"></div>
-                        </div>
-                        <span>Sub Users</span>
-                    </a>
-                </li>
+                @{
+                    if (x.FindFirst("pid").Value.ToString() == "0")
+                    {
+                        <li class="sub-header">
+                            <span>Collaborations</span>
+                        </li>
+                        <li>
+                            <a href="/Home/Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-ui-92"></div>
+                                </div>
+                                <span>Sub Users</span>
+                            </a>
+                        </li>
+                    }
+                }
             </ul>
         </div>
         <!--------------------

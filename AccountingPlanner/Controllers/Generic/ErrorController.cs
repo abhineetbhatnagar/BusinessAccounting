@@ -16,5 +16,11 @@ namespace AccountingPlanner.Controllers.Generic
         {
             return View();
         }
+
+        [Route("Forbidden")]
+        public IActionResult Forbidden()
+        {
+            return View();
+        }
     }
 }

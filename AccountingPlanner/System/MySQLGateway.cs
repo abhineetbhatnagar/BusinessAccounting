@@ -8,7 +8,7 @@ namespace AccountingPlanner.System
     {
         private string _connectionString;
 
-        public MySqlConnection CreateConnection(string ConnectionString)
+        private MySqlConnection CreateConnection(string ConnectionString)
         {
             return new MySqlConnection(ConnectionString);
         }

@@ -4586,7 +4586,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Error\" />
     <Folder Include="wwwroot\uploads\business_logo\" />
     <Folder Include="wwwroot\uploads\profile_picure\" />
   </ItemGroup>

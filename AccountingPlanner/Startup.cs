@@ -68,14 +68,7 @@ namespace AccountingPlanner
             app.UseCookiePolicy();
             app.UseAuthentication();
 
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.Add("Cache-Control", "no-cache, no-store");
-                context.Response.Headers.Add("Expires", "-1");
-
-                await next();
-            });
-
+            app.UseMiddleware<AccessControlMiddleware>(this.Configuration.GetConnectionString("Connection"));
 
             app.UseMvc(routes =>
             {
