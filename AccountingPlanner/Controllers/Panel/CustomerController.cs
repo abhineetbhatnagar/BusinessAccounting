@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AccountingPlanner.Models.Customer;
+﻿using AccountingPlanner.Models.Customer;
 using AccountingPlanner.System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data;
+using System.Security.Claims;
 
 namespace AccountingPlanner.Controllers.Panel
 {

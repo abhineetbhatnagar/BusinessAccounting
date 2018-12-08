@@ -5,6 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AccountingPlanner.System;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +50,36 @@ namespace AccountingPlanner.Controllers.Generic
             {
                 resp =  _objHelper.ConvertTableToDictionary(_dtResp);
             }
+
+            return new JsonResult(resp);
+        }
+
+        [HttpGet("BusinessList/{id}/{name}")]
+        public async Task<JsonResult> BusinessListAsync(string id, string name)
+        {
+            await HttpContext.SignOutAsync(scheme: CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claims = new List<Claim>
+                    {
+                        new Claim("name", _objHelper.GetTokenData(HttpContext.User.Identity as ClaimsIdentity, "name")),
+                        new Claim("id_user", _objHelper.GetTokenData(HttpContext.User.Identity as ClaimsIdentity, "id_user")),
+                        new Claim("id_organization", id),
+                        new Claim("organization_name", name),
+                        new Claim("profile_img", _objHelper.GetTokenData(HttpContext.User.Identity as ClaimsIdentity, "profile_img")),
+                        new Claim("pid", _objHelper.GetTokenData(HttpContext.User.Identity as ClaimsIdentity, "pid"))
+                    };
+
+            var userIdentity = new ClaimsIdentity(claims, "Cookie");
+
+            ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+            await HttpContext.SignInAsync(
+                scheme: CookieAuthenticationDefaults.AuthenticationScheme,
+                principal: principal
+            );
+
+            Dictionary<string, string> resp = new Dictionary<string, string>();
+
+            resp.Add("success", true.ToString());
 
             return new JsonResult(resp);
         }

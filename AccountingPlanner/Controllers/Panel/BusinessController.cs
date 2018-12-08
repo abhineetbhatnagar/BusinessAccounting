@@ -105,7 +105,7 @@ namespace AccountingPlanner.Controllers.Panel
 
             List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>();
 
-            parameters.Add(new KeyValuePair<string, string>("i_organization_name", businessModel.name));
+            parameters.Add(new KeyValuePair<string, string>("i_organization_name", businessModel.name.ToUpper()));
             parameters.Add(new KeyValuePair<string, string>("i_logo", $"{dbPath}/{localFileName}"));
             parameters.Add(new KeyValuePair<string, string>("i_type_of_business", businessModel.type_of_business));
             parameters.Add(new KeyValuePair<string, string>("i_address_line_1", businessModel.address_line_1));

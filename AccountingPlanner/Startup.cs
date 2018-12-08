@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,12 +15,20 @@ namespace AccountingPlanner
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+            HostingEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,7 +41,7 @@ namespace AccountingPlanner
                 options.ClaimsIssuer = "";
                 options.ExpireTimeSpan = duration;
                 options.LoginPath = "/Auth/Login";
-                options.Cookie.Domain = "localhost";
+                options.Cookie.Domain = this.Configuration["Domain"];
                 options.Cookie.Name = "AuthCookie";
                 options.Cookie.SameSite = SameSiteMode.Strict;
                 options.Cookie.HttpOnly = true;
@@ -46,8 +55,7 @@ namespace AccountingPlanner
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -67,7 +75,6 @@ namespace AccountingPlanner
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-
             app.UseMiddleware<AccessControlMiddleware>(this.Configuration.GetConnectionString("Connection"));
 
             app.UseMvc(routes =>

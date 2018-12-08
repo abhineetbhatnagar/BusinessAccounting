@@ -8,6 +8,7 @@
     <meta content="Tamerlan Soziev" name="author">
     <meta content="Admin dashboard html template" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css">
     <link href="~/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
     <link href="~/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
@@ -16,10 +17,19 @@
     <link href="~/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
     <link href="~/bower_components/slick-carousel/slick/slick.css" rel="stylesheet">
     <link href="~/css/main.css?version=4.4.0" rel="stylesheet">
+    <link href="~/css/custom.css" rel="stylesheet">
     <link href="~/icon_fonts_assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        $(document).ready(function () {
+            $(".loader-container").fadeOut();
+        });
+    </script>
 </head>
 <body class="menu-position-side menu-side-left full-screen with-content-panel">
-
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
     <div aria-hidden="true" class="onboarding-modal modal fade animated" id="onboardingFormModal" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-centered" role="document">
             <div class="modal-content text-center">
@@ -32,17 +42,20 @@
                         Linked Business Accounts
                     </h4>
                     <div class="onboarding-text">
-                        Following list contains the list of business accounts linked to your email. Select one to switch.    
+                        Following list contains the list of business accounts linked to your email. Select one to switch.
                     </div>
                     <form>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="">Your Role</label>
-                                    <select id="businessList" class="form-control">
-                                        <option value="">-- Choose One --</option>
-                                    </select>
-                                </div>
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="">Your Role</label>
+                                <select id="businessList" class="form-control">
+                                    <option value="">-- Choose One --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <button class="btn btn-primary" id="btnBusiness" type="button">Select Business</button>
                             </div>
                         </div>
                     </form>
@@ -87,8 +100,8 @@
                     </div>
                 </div>
                 <!--------------------
-    START - Mobile Menu List
-    -------------------->
+                START - Mobile Menu List
+                -------------------->
                 <ul class="main-menu">
                     <li>
                         <a asp-controller="Home" asp-action="Index">
@@ -161,7 +174,7 @@
                                 <span>Collaborations</span>
                             </li>
                             <li>
-                                <a href="/Home/Index">
+                                <a asp-action="Index" asp-controller="SubUser">
                                     <div class="icon-w">
                                         <div class="os-icon os-icon-ui-92"></div>
                                     </div>
@@ -231,7 +244,7 @@
                         </div>
                         <ul>
                             <li>
-                                <a data-target="#onboardingFormModal" data-toggle="modal"><i class="os-icon os-icon-signs-11"></i><span>Linked Business</span></a>
+                                <a data-target="#onboardingFormModal" data-toggle="modal"><i class="os-icon os-icon-layers"></i><span>Linked Business</span></a>
                             </li>
                             <li>
                                 <a asp-controller="Auth" asp-action="Logout"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
@@ -315,7 +328,7 @@
                             <span>Collaborations</span>
                         </li>
                         <li>
-                            <a href="/Home/Index">
+                            <a asp-action="Index" asp-controller="SubUser">
                                 <div class="icon-w">
                                     <div class="os-icon os-icon-ui-92"></div>
                                 </div>
@@ -337,7 +350,6 @@
     </div>
     <div class="display-type"></div>
 
-    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="~/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="~/bower_components/moment/moment.js"></script>
     <script src="~/bower_components/select2/dist/js/select2.full.min.js"></script>
@@ -364,16 +376,35 @@
     <script src="~/js/main.js?version=4.4.0"></script>
 
     <script>
+        var arr = [];
         $.ajax({
             url: "/api/panel/BusinessList",
             type: "GET",
             success: function (result) {
-                console.log(result);
+                arr = result;
                 for (var i = 0; i < result.length; i++) {
                     $("#businessList").append("<option value='" + result[i].id_organization_master + "'>" + result[i].name + "</option>")
                 }
             }
         });
+
+        $("#btnBusiness").on('click', function () {
+            var name;
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].id_organization_master == $("#businessList").val()) {
+                    name = arr[i].name;
+                }
+            }
+
+            $.ajax({
+                url: "/api/panel/BusinessList/" + $("#businessList").val() + "/" + name,
+                type: "GET",
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        });
+
     </script>
 
     @RenderSection("Scripts", required: false)

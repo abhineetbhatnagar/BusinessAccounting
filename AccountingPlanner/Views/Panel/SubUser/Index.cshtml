@@ -1,0 +1,253 @@
+﻿@model AccountingPlanner.Models.SubUser.SubUserModel
+
+@{
+    ViewData["Title"] = "Sub User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html">Collaboration</a>
+    </li>
+    <li class="breadcrumb-item">
+        <span>Sub User</span>
+    </li>
+</ul>
+
+<!--------------------
+END - Breadcrumbs
+-------------------->
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">
+                Sub User Management
+            </h6>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="element-box">
+                        <h5 class="form-header">
+                            Sub User List
+                        </h5>
+                        <div class="form-desc">
+                            DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews. <a href="http://www.dropzonejs.com/" target="_blank">Learn More here</a>
+                        </div>
+                        @{
+                            DataTable _dt;
+                            if (ViewData["TaxList"] != null)
+                            {
+                                _dt = (DataTable)ViewData["TaxList"];
+                                if (_dt.Rows.Count == 0)
+                                {
+                                    <div class="text-center">
+                                        <h5>No Sub User Registered</h5>
+                                        <small style="border-bottom: 0px;" class="form-desc">
+                                            You have not registered any sub user yet. Fill the form displayed to register a new sub user.
+                                        </small>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <table id="dataTable1" width="100%" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S. No.</th>
+                                                <th>Name Label</th>
+                                                <th>eMail</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0; i < _dt.Rows.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td>@(i + 1)</td>
+                                                    <td>@_dt.Rows[i]["label"]</td>
+                                                    <td>@_dt.Rows[i]["type"]</td>
+                                                    <td>@_dt.Rows[i]["value"]</td>
+                                                    <td>@_dt.Rows[i]["applicability"]</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    <h5>@ViewData["ListErrorMessage"]</h5>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="element-box">
+                        <h5 class="form-header">
+                            Register Sub User
+                        </h5>
+                        <div class="form-desc">
+                            DropzoneJS is an open source library that provides.
+                        </div>
+                        @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["ErrorMessage"])))
+                        {
+                            <div class="alert alert-danger"><strong>Oops!</strong> @ViewData["ErrorMessage"]</div>
+                        }
+                        @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["SuccessMessage"])))
+                        {
+                            <div class="alert alert-success"><strong>Registered!</strong> @ViewData["SuccessMessage"]</div>
+                        }
+
+                        <form asp-action="Index">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="name" class="control-label"></label>
+                                <input asp-for="name" placeholder="Full name of the user" class="form-control" />
+                                <span asp-validation-for="name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="email" class="control-label"></label>
+                                <input asp-for="email" placeholder="eMail address to be used as username" class="form-control" />
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="password" class="control-label"></label>
+                                <input asp-for="password" placeholder="password" type="password" class="form-control" />
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="income" class="control-label"></label>
+                                        <select class="form-control" asp-for="income">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="income" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="expense" class="control-label"></label>
+                                        <select class="form-control" asp-for="expense">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="expense" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="accounting" class="control-label"></label>
+                                        <select class="form-control" asp-for="accounting">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="accounting" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="reports" class="control-label"></label>
+                                        <select class="form-control" asp-for="reports">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="reports" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="integration" class="control-label"></label>
+                                        <select class="form-control" asp-for="integration">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="integration" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="customer" class="control-label"></label>
+                                        <select class="form-control" asp-for="customer">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="customer" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="vendor" class="control-label"></label>
+                                        <select class="form-control" asp-for="vendor">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="vendor" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="tax" class="control-label"></label>
+                                        <select class="form-control" asp-for="tax">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="tax" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="product" class="control-label"></label>
+                                        <select class="form-control" asp-for="product">
+                                            <option value="">-- Choose One --</option>
+                                            <option value="F">Full Access</option>
+                                            <option value="R">Read Access</option>
+                                            <option value="N">No Access</option>
+                                        </select>
+                                        <span asp-validation-for="product" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Register" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
