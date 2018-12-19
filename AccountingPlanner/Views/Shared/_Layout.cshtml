@@ -33,7 +33,7 @@
     <div aria-hidden="true" class="onboarding-modal modal fade animated" id="onboardingFormModal" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-centered" role="document">
             <div class="modal-content text-center">
-                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Skip Intro</span><span class="os-icon os-icon-close"></span></button>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="os-icon os-icon-close"></span></button>
                 <div class="onboarding-media">
                     <img alt="" src="~/img/bigicon5.png" width="200px">
                 </div>
@@ -42,20 +42,22 @@
                         Linked Business Accounts
                     </h4>
                     <div class="onboarding-text">
-                        Following list contains the list of business accounts linked to your email. Select one to switch.
+                        List of businesses you have linked with your accounting.
                     </div>
                     <form>
-                        <div class="col-sm-10">
-                            <div class="form-group">
-                                <label for="">Your Role</label>
-                                <select id="businessList" class="form-control">
-                                    <option value="">-- Choose One --</option>
-                                </select>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label for="">Businesses</label>
+                                    <select id="businessList" class="form-control">
+                                        <option value="">-- Choose One --</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <button class="btn btn-primary" id="btnBusiness" type="button">Select Business</button>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <button class="btn btn-primary" id="btnBusiness" type="button">Select Business</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -192,7 +194,7 @@
         <!--------------------
         START - Main Menu
         -------------------->
-        <div class="menu-w selected-menu-color-light menu-has-selected-link menu-activated-on-click color-scheme-dark color-style-default sub-menu-color-dark menu-position-side menu-side-left menu-layout-compact sub-menu-style-inside">
+        <div class="menu-w color-scheme-dark color-style-default menu-position-side menu-side-left menu-layout-compact sub-menu-style-inside sub-menu-color-light selected-menu-color-light menu-activated-on-click menu-has-selected-link">
             <div class="logo-w">
                 <a class="logo" href="/">
                     <div class="logo-element"></div>
@@ -263,6 +265,170 @@
                             <div class="os-icon os-icon-layout"></div>
                         </div>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sub-header">
+                    <span>Income</span>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Income">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Quotes</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Invoices</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li class="sub-header">
+                    <span>Expense</span>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Income">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Bills</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Receipts</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Purchase Orders</span>
+                    </a>
+                </li>
+                <li class="sub-header">
+                    <span>Accounting</span>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Income">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Transactions</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Chart of Accounts</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Balance Sheet</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Trial Balance</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Trial Balance</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Profit &amp; Loss</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Invoices">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-ui-92"></div>
+                        </div>
+                        <span>Reconciliation</span>
+                    </a>
+                </li>
+                <li class="sub-header">
+                    <span>Reports</span>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-user-male-circle2"></div>
+                        </div>
+                        <span>Tax Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-user-male-circle2"></div>
+                        </div>
+                        <span>Income by Customer</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-user-male-circle2"></div>
+                        </div>
+                        <span>Purchases by vendors</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-user-male-circle2"></div>
+                        </div>
+                        <span>Aged Receivables</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-user-male-circle2"></div>
+                        </div>
+                        <span>Aged Payables</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <div class="icon-w">
+                            <div class="os-icon os-icon-user-male-circle2"></div>
+                        </div>
+                        <span>Account Balances</span>
                     </a>
                 </li>
                 <li class="sub-header">
@@ -337,17 +503,7 @@
                         </li>
                     }
                 }
-                <li class="sub-header">
-                    <span>Income &amp; Expense</span>
-                </li>
-                <li>
-                    <a asp-action="Index" asp-controller="Income">
-                        <div class="icon-w">
-                            <div class="os-icon os-icon-ui-92"></div>
-                        </div>
-                        <span>Estimates</span>
-                    </a>
-                </li>
+
             </ul>
         </div>
         <!--------------------
